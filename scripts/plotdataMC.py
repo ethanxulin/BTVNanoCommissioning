@@ -166,8 +166,12 @@ elif "QCD" == args.phase:
     input_txt = input_txt + ""
 elif "ttdilep_sf" == args.phase:
     input_txt = input_txt + " (e$\mu$)"
-else:
-    input_txt = input_txt + " ($\mu$)"
+elif "2mu" in args.phase:
+    input_txt = input_txt + " ($\mu\mu$)"
+elif "2e" in args.phase:
+    input_txt = input_txt + " (ee)"
+# else:
+#     input_txt = input_txt + " ($\mu$)"
 if "ctag" in args.phase and "DY" not in args.phase:
     input_txt = input_txt + "\nw/ soft-$\mu$"
 if args.variable == "all":
@@ -199,6 +203,7 @@ elif "*" in args.variable:
 else:
     var_set = args.variable.split(",")
 for index, discr in enumerate(var_set):
+    print(index,discr)
     try:
         if not isinstance(collated["mc"][discr], hist.hist.Hist):
             continue
@@ -467,7 +472,7 @@ for index, discr in enumerate(var_set):
             for i, t in enumerate(["udsg", "pu", "c", "b"]):
                 splitflav_axis["flav"] = i
                 splitflav_stack.append(collated[sample][discr][splitflav_axis])
-
+### Should edit here
                 if args.split == "flavor":
                     labels.append(t)
                     color_config["color"].append(color_map[t])
@@ -627,9 +632,9 @@ for index, discr in enumerate(var_set):
         name = "log"
         ax.set_ylim(bottom=0.1)
         hep.mpl_magic(ax=ax)
-        fig.savefig(
-            f"plot/{args.phase}_{args.ext}/unc_{discr}_inclusive{scale}_{name}.pdf"
-        )
+        # fig.savefig(
+        #     f"plot/{args.phase}_{args.ext}/unc_{discr}_inclusive{scale}_{name}.pdf"
+        # )
         fig.savefig(
             f"plot/{args.phase}_{args.ext}/unc_{discr}_inclusive{scale}_{name}.png"
         )
@@ -638,10 +643,60 @@ for index, discr in enumerate(var_set):
             "creating:",
             f"plot/{args.phase}_{args.ext}/unc_{discr}_inclusive{scale}_{name}.png",
         )
-        fig.savefig(
-            f"plot/{args.phase}_{args.ext}/unc_{discr}_inclusive{scale}_{name}.pdf"
-        )
+        # fig.savefig(
+        #     f"plot/{args.phase}_{args.ext}/unc_{discr}_inclusive{scale}_{name}.pdf"
+        # )
         fig.savefig(
             f"plot/{args.phase}_{args.ext}/unc_{discr}_inclusive{scale}_{name}.png"
         )
     plt.close(fig)
+
+for sample in collated:
+    print(f"\nSample: {sample}")
+    print("Available histograms:", list(collated[sample].keys()))
+
+
+
+# print("\n================= Per-sample Summary =================")
+# print(f"{'Sample':<20} | {'Events':>10} | {'Lumi (/pb)':>12} | {'ε (evt/pb)':>10} | {'Nb/Njets':>10} | {'Signif.':>10}")
+# print("-" * 80)
+
+# for sample in collated.keys():
+#     if sample == "data":
+#         continue  # skip data, unless you want to include it
+
+#     hists = collated[sample]
+#     h_njet = hists.get("njet", None)
+#     h_nbjet = hists.get("nbjet", None)
+
+#     if h_njet is None:
+#         print(f"{sample:<20} | Missing 'njet' histogram")
+#         continue
+
+#     Njets = np.sum(h_njet.values(flow=args.flow))
+#     Nbjets = np.sum(h_nbjet.values(flow=args.flow))
+#     Nevents = Njets
+
+#     purity = Nbjets / Njets if Njets > 0 else 0
+#     efficiency = Nevents / args.lumi if args.lumi > 0 else 0
+#     significance = Nbjets / np.sqrt(Nbjets + Njets) if (Nbjets + Njets) > 0 else 0
+
+#     print(f"{sample:<20} | {Nevents:10.0f} | {args.lumi:12.1f} | {efficiency:10.3f} | {purity:10.3f} | {significance:10.3f}")
+print("\n================= Njets Summary =================")
+print(f"{'Sample':<20} | {'Njets':>10}")
+print("-" * 35)
+
+for sample in collated.keys():
+    if sample == "data":
+        continue  # skip data if desired
+
+    hists = collated[sample]
+    h_njet = hists.get("njet", None)
+
+    if h_njet is None:
+        print(f"{sample:<20} | Missing 'njet'")
+        continue
+
+    # Sum all bins of the njet histogram
+    Njets = np.sum(h_njet.values())
+    print(f"{sample:<20} | {Njets:10.2f}")
