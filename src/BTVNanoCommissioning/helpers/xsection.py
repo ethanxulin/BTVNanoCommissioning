@@ -37,14 +37,14 @@ xsection = [
     },
         {
         "process_name": "DYto2E-2Jets_Bin-MLL-50_TuneCP5_13p6TeV_amcatnloFXFX-pythia8",
-        "cross_section": "2244.0",
+        "cross_section": "2124.08", #"2244.0",
         "DAS": "/DYJetsToLL_M-50_TuneCP5_13p6TeV-madgraphMLM-pythia8/Run3Winter22NanoAOD-122X_mcRun3_2021_realistic_v9_ext1-v1/NANOAODSIM",
         "energy": "13.6",
         "comment": "from TOP-22-012",
     },
             {
         "process_name": "DYto2Mu-2Jets_Bin-MLL-50_TuneCP5_13p6TeV_amcatnloFXFX-pythia8",
-        "cross_section": "2219",
+        "cross_section": "2124.08", #"2219",
         "DAS": "/DYJetsToLL_M-50_TuneCP5_13p6TeV-madgraphMLM-pythia8/Run3Winter22NanoAOD-122X_mcRun3_2021_realistic_v9_ext1-v1/NANOAODSIM",
         "energy": "13.6",
         "comment": "from TOP-22-012",

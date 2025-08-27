@@ -12,6 +12,11 @@ from BTVNanoCommissioning.workflows.ttsemilep_valid_sf import (
 from BTVNanoCommissioning.workflows.ttdilep_valid_sf import (
     NanoProcessor as TTdilepValidSFProcessor,
 )
+from BTVNanoCommissioning.workflows.ttdilep_valid_sf_same_l import (
+    NanoProcessor as TTdilepValidllSFProcessor,
+)
+
+
 
 # C-tag
 from BTVNanoCommissioning.workflows.ctag_emdileptt_valid_sf import (
@@ -62,6 +67,12 @@ workflows["ttdilep_sf_2Dcalib_mumu"] = partial(
 )
 workflows["ttdilep_sf_2Dcalib_ee"] = partial(
     TTdilepValidSFProcessor, selectionModifier="ttdilep_sf_2Dcalib_ee"
+)
+workflows["ttdilep_sf_2Dcalib_2mu"] = partial(
+    TTdilepValidllSFProcessor, selectionModifier="ttdilep_sf_2Dcalib_2mu"
+)
+workflows["ttdilep_sf_2Dcalib_2e"] = partial(
+    TTdilepValidllSFProcessor, selectionModifier="ttdilep_sf_2Dcalib_2e"
 )
 workflows["ttsemilep_sf"] = partial(
     TTsemilepValidSFProcessor, selectionModifier="tt_semilep"
